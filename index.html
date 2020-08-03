@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html style="height:100%;"> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link data-name="vs/editor/editor.main" rel="stylesheet"  href="./vs/editor/editor.main.css">
+        <style type="text/css">
+            body { height: 100vh !important; }
+            select {
+                padding: 10px;
+                margin-bottom: 10px;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <select class="select" name="linguagens" id="linguagens" >
+            <option value="typescript">Typescript</option>
+            <option value="javascript">Javascript</option>
+            <option value="json">Json</option>
+            <option value="css">CSS</option>
+            <option value="html">HTML</option>
+            <option value="scss">SCSS</option>
+            <option value="sql">SQL</option>
+        </select>
+        <div id="container" style="height:100%;"></div>
+
+        <!-- configs -->
+        <script>var require = { paths: { 'vs': './vs' } };</script>
+        <script src="./vs/loader.js"></script>
+        <script src="./vs/editor/editor.main.nls.js"></script>
+        <script src="./vs/editor/editor.main.js"></script> 
+        
+        <!-- linguagens -->
+        <script src="./vs/basic-languages/css/css.js"></script>
+        <script src="./vs/basic-languages/html/html.js"></script>
+        <script src="./vs/basic-languages/scss/scss.js"></script>
+        <script src="./vs/basic-languages/sql/sql.js"></script>
+        <script src="./vs/basic-languages/typescript/typescript.js"></script>
+        <script src="./vs/basic-languages/javascript/javascript.js"></script>
+
+        <!-- workers -->
+        <script src="./vs/language/json/jsonMode.js"></script>
+        <script src="./vs/language/typescript/tsMode.js"></script>
+        <script src="./vs/language/typescript/tsWorker.js"></script>
+        <script>
+            // Through the options literal, the behaviour of the editor can be easily customized.
+            // Here are a few examples of config options that can be passed to the editor.
+            // You can also call editor.updateOptions at any time to change the options.
+            var editor = monaco.editor.create(document.getElementById("container"), {
+                //value: "function hello() {\n\talert('Hello world!');\n}",
+                language: "typescript",
+
+                lineNumbers: "on",
+                roundedSelection: true,
+                scrollBeyondLastLine: false,
+                readOnly: false,
+                theme: "vs-dark",
+            });
+            function mudarLinguagem() {
+                document.querySelector('.select').addEventListener('change', (e) => {
+                    console.log(e.target.value);
+                    monaco.editor.setModelLanguage(editor.getModel(), e.target.value);
+
+                })
+            }
+            window.onload = () => {
+                mudarLinguagem();
+            }
+        </script>
+    </body>
+</html> 
